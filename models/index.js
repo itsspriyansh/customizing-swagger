@@ -16,9 +16,9 @@ const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 
-db.users = require('./users')(sequelize, DataTypes);
-
 db.sequelize.sync()
 .then(() => console.log('Database and tables created.'))
+
+db.users = require('./users')(sequelize, DataTypes);
 
 module.exports = db;
