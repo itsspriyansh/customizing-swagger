@@ -17,4 +17,19 @@ const statuses_get = async (req, res) => {
     }
 }
 
-module.exports = { statuses_get };
+const statuses_post = async (req, res) => {
+    try {
+        const { content } = req.body;
+        const id = res.locals?.user?.id;
+        if (id) {
+            const status = await statuses.create({ userId: id, content: content });
+            res.statu(201).json(status);
+        } else {
+            res.status(401).json({ message: 'unauthorized' });
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
+
+module.exports = { statuses_get, statuses_post };
