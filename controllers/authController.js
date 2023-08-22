@@ -19,7 +19,7 @@ const user_get = async (req, res) => {
               });              
             res.status(200).json(user);
         } else {
-            throw Error('unauthorized');
+            res.status(401).json({ message: 'unauthorized' });
         }
     } catch(err) {
         res.status(400).json(err);
@@ -37,10 +37,10 @@ const login_post = async (req, res) => {
                 res.cookie("jwt", token, { maxAge : maxAge * 1000 });
                 res.status(200).json({ user : user.id});
             } else {
-                throw Error('incorrect password');
+                res.status(401).json({ message: 'incorrect password' });
             }
         } else {
-            throw Error('incorrect email');
+            res.status(401).json({ message: 'incorrect email' });
         }
     } catch (err) {
         res.status(400).json(err);

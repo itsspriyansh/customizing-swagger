@@ -20,5 +20,9 @@ db.sequelize.sync()
 .then(() => console.log('Database and tables created.'))
 
 db.users = require('./users')(sequelize, DataTypes);
+db.statuses = require('./statuses')(sequelize, DataTypes);
+
+db.users.hasMany(db.statuses, {foreignKey: 'userId'});
+db.statuses.belongsTo(db.users, {foreignKey: 'userId'});
 
 module.exports = db;

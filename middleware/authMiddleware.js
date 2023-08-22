@@ -5,7 +5,6 @@ const checkUser = (req, res, next) => {
     try {
         const token = req.headers.authorization;
         if (token) {
-            console.log(token)
             jwt.verify(token, process.env.JWT_SIGNATURE, async (err, decodedToken) => {
             if (err) {
                 res.locals.user = null;
