@@ -27,7 +27,7 @@ const signup_post = async (req, res) => {
             name,
             email,
             username,
-            token: User.token,
+            token,
         })
     } catch (err) {
         res.status(400).json(err);
