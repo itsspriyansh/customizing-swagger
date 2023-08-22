@@ -9,21 +9,38 @@ const createToken = (id) => {
     })
 }
 
+const user_get = async (req, res) => {
+    try {
+        const id = res.locals?.user?.id
+        if (id) {
+            const user = await users.findOne({
+                where: { id: id },
+                attributes: { exclude: ['password'] }
+              });              
+            res.status(200).json(user);
+        } else {
+            res.status(401).send("unauthorized");
+        }
+    } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
 const signup_post = async (req, res) => {
     const { name, username, email, password } = req.body;
     try {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
-        const User = await users.create({
+        const user = await users.create({
             name: name,
             username: username,
             email: email,
             password: hashedPassword,
         });
-        const token = createToken(User.id);
+        const token = createToken(user.id);
         res.cookie("jwt", token, { maxAge: maxAge*1000 });
         res.status(201).json({
-            id: User.id,
+            id: user.id,
             name,
             email,
             username,
@@ -36,6 +53,7 @@ const signup_post = async (req, res) => {
 
 const logout_get = (req, res) => {
     res.cookie("jwt", "", { maxAge : 1 })
+    res.send("logged out");
 }
 
-module.exports = { signup_post, logout_get };
+module.exports = { signup_post, logout_get, user_get };
