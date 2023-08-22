@@ -1,5 +1,6 @@
 const express = require("express");
-require('./config/connection')
+const cookieParser = require("cookie-parser");
+require('./models/index')
 
 const app = express();
 
