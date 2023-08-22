@@ -19,9 +19,30 @@ const user_get = async (req, res) => {
               });              
             res.status(200).json(user);
         } else {
-            res.status(401).send("unauthorized");
+            throw Error('unauthorized');
         }
     } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
+const login_post = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await users.findOne({ where: { email: email } });
+        if (user) {
+            const auth = await bcrypt.compare(password, user.password);
+            if (auth) {
+                const token = createToken(user.id);
+                res.cookie("jwt", token, { maxAge : maxAge * 1000 });
+                res.status(200).json({ user : user.id});
+            } else {
+                throw Error('incorrect password');
+            }
+        } else {
+            throw Error('incorrect email');
+        }
+    } catch (err) {
         res.status(400).json(err);
     }
 }
@@ -56,4 +77,4 @@ const logout_get = (req, res) => {
     res.send("logged out");
 }
 
-module.exports = { signup_post, logout_get, user_get };
+module.exports = { signup_post, login_post, logout_get, user_get };
