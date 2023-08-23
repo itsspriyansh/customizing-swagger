@@ -23,7 +23,7 @@ const statuses_post = async (req, res) => {
         const id = res.locals?.user?.id;
         if (id) {
             const status = await statuses.create({ userId: id, content: content });
-            res.statu(201).json(status);
+            res.status(201).json(status);
         } else {
             res.status(401).json({ message: 'unauthorized' });
         }
