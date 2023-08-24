@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:5000",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "http"
@@ -159,6 +159,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
