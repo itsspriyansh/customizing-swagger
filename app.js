@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const authRoutes = require('./routes/authRoutes');
 const statusRoutes = require('./routes/statusRoutes');
+const quicktypeRoutes = require('./routes/quicktypeRoute');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger_output.json');
 require('./models/index');
@@ -17,5 +18,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(authRoutes);
 app.use(statusRoutes);
+app.use(quicktypeRoutes);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
