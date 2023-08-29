@@ -19,6 +19,11 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "cookie",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -113,6 +118,19 @@
         }
       }
     },
+    "/get-types": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/status/{id}": {
       "get": {
         "description": "",
@@ -141,6 +159,16 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "cookie",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
             "type": "string"
           },
           {

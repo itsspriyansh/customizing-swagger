@@ -19,8 +19,9 @@ const statuses_get = async (req, res) => {
 
 const statuses_post = async (req, res) => {
     try {
-        const { content } = req.body;
         const id = res.locals?.user?.id;
+        const { page } = req.query;
+        const { content } = req.body;
         if (id) {
             const status = await statuses.create({ userId: id, content: content });
             res.status(201).json(status);
